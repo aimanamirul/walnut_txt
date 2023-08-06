@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+pb_data/data.db
+pb_data/logs.db
+pb_data/types.d.ts
+pb_migrations/1691245288_created_Notes.js
+pb_migrations/1691245340_updated_Notes.js
+pb_migrations/1691245555_updated_Notes.js
+src/app/providers.js
