@@ -7,11 +7,11 @@ import NoteBox from "./NoteBox";
 
 export default function NotesClient(props) {
     const notes = props.notes;
+    const newNote = {"note_title" : "New Note!", "note_text": "Here is a new note."}
     
-    let noteBoxInit = <NoteBox note={notes[0]} />
-
+    let noteBoxInit = notes ? <NoteBox note={notes[0]} /> : <NoteBox note={newNote} />
     const [noteBoxContent, setNoteBoxContent] = useState(noteBoxInit)
-
+    
     function handleNoteClick(item) {
         setNoteBoxContent(<NoteBox note={item} />)
     }
