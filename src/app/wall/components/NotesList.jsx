@@ -4,10 +4,6 @@ export default function NotesList(props) {
 
     const defineClass = (id) => {
         let activeId = props.activeId;
-
-        console.log(activeId)
-        console.log(id)
-
         let itemClass = "mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-5 py-4 "
         let bgColor = (activeId === id) ? "bg-gray-400" : "bg-neutral-800" ;
         return itemClass + bgColor;
