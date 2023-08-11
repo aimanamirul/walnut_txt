@@ -1,16 +1,22 @@
 'use client'
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function NotesList(props) {
+
+    //const [localNotes, setlocalNotes] = useState(props.notes)
+    const localNotes = props.notes
+    const router = useRouter()
 
     const defineClass = (id) => {
         let activeId = props.activeId;
-        let itemClass = "mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-5 py-4 "
+        let itemClass = "mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-4 py-3 "
         let bgColor = (activeId === id) ? "bg-gray-400" : "bg-neutral-800" ;
         return itemClass + bgColor;
     }
 
-
-    const addNewNote = <li
+    const newNoteSticky = <li
         className={defineClass("new")}
         onClick={() => { props.handleNoteClick({"id" : "new" ,"note_title": "New Note!", "note_text": ""}) }}
     >
@@ -23,12 +29,12 @@ export default function NotesList(props) {
 
     if (!props.notes) {
         return (<>
-            {addNewNote}
+            {newNoteSticky}
         </>)
     } else {
         return (
             <>
-                {props.notes.map((item, i) => {
+                {localNotes.map((item, i) => {
                     return (
                         <li
                             className={defineClass(item.id)}
@@ -44,7 +50,7 @@ export default function NotesList(props) {
                 })
                 }
 
-                {addNewNote}
+                {newNoteSticky}
             </>
         )
     }
