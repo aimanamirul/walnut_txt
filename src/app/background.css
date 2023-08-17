@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .background {
+        animation: bg-animation 25s ease-in-out infinite;
+    }
+    
+    @keyframes bg-animation {
+        0% {@apply bg-black}
+        10% {@apply bg-blue-900}
+        20% {@apply bg-slate-900}
+        30% {@apply bg-rose-900}
+        40% {@apply bg-blue-900}
+        50% {@apply bg-slate-900 }
+        60% {@apply bg-emerald-800}
+        70% {@apply bg-slate-900}
+        80% {@apply bg-gray-700}
+        100% {@apply bg-black }
+    }
+}
