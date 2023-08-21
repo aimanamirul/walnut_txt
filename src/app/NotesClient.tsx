@@ -36,9 +36,13 @@ export default function NotesClient(props) {
             "note_date": ""
         }
 
-        console.log(data)
-        
-        const record = await pb.collection('Notes').create(data);
+        console.log(activeNoteId)
+
+        if(activeNoteId === "new") {
+            const record = await pb.collection('Notes').create(data);
+        } else {
+            const record = await pb.collection('Notes').update(activeNoteId, data)
+        }
 
         setText('');
         setTitle('');
