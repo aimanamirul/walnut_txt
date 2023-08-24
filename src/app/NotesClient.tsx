@@ -28,15 +28,13 @@ export default function NotesClient(props) {
         setActiveNoteId(item.id);
     }
 
-    const send = async (e) => {
+    const createNote = async(e) => {
         e.preventDefault()
         let data = {
             "note_title": title,
             "note_text": text,
             "note_date": ""
         }
-
-        console.log(activeNoteId)
 
         if(activeNoteId === "new") {
             const record = await pb.collection('Notes').create(data);
@@ -49,10 +47,14 @@ export default function NotesClient(props) {
         router.refresh();
     }
 
+    const removeNote = async(e) => {
+
+    }
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-between py-12">
             <div>
-                <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={send}>
+                <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={createNote}>
                     <div className="bg-slate-900 w-full h-[70vh] m-5 p-5 rounded-lg border border-gray-400">
                         <div className="flex flex-row">
                             <input

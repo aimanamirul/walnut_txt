@@ -9,7 +9,7 @@ export default function NotesList(props) {
     const localNotes = props.notes
     const router = useRouter()
 
-    const defineClass = (id) => {
+    const defineClass = (id = "new") => {
         let activeId = props.activeId;
         let itemClass = "my-2 mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-4 py-3 "
         let bgColor = (activeId === id) ? "bg-gray-400" : "bg-neutral-800" ;
@@ -17,7 +17,7 @@ export default function NotesList(props) {
     }
 
     const newNoteSticky = <li
-        className={defineClass("new")}
+        className={defineClass()}
         onClick={() => { props.handleNoteClick({"id" : "new" ,"note_title": "New Note!", "note_text": ""}) }}
     >
         <h1 className={`mb-3 text-2xl font-semibold`} >Create A New Note +</h1>
