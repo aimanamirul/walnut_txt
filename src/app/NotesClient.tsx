@@ -71,6 +71,7 @@ export default function NotesClient(props) {
                                     name="note_title"
                                     placeholder="Write your Title here!"
                                     onChange={(e) => { setTitle(e.target.value) }}
+                                    required={true}
                                     className="w-full py-1 text-xl font-extrabold bg-slate-900 outline-none resize-none" type="text" value={title} />
                             </div>
                             <div className="flex flex-row">

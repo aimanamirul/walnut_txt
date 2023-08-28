@@ -8,6 +8,7 @@ export default function NotesList(props) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     interface parsedDate {
+        time: string | number;
         dayString: string;
         dayNumber: number;
         month: string;
@@ -20,7 +21,11 @@ export default function NotesList(props) {
         let month = months[parsingDate.getMonth()];
         let year = parsingDate.getFullYear();
 
+        let min = parsingDate.getMinutes() < 10 ? parsingDate.getMinutes() + "0" : parsingDate.getMinutes();
+        let time = `${parsingDate.getHours()}:${min}`
+        
         let parsedDate = {
+            time: time,
             dayString: day,
             dayNumber: parsingDate.getUTCDate(),
             month: month,
@@ -61,7 +66,7 @@ export default function NotesList(props) {
         return (
             <>
                 {localNotes.map((item, i) => {
-                    let itemParsedDate : parsedDate = parseDate(item.note_date);
+                    let itemParsedDate: parsedDate = parseDate(item.note_date);
 
                     return (
                         <li
@@ -71,7 +76,7 @@ export default function NotesList(props) {
                         >
                             <h1 className={`mb-1 break-words text-2xl font-semibold`} >{item.note_title}</h1>
                             <p className={`mb-1 w-m-[25ch] text-sm opacity-50`}>
-                                {`${itemParsedDate.dayString} - ${itemParsedDate.dayNumber} ${itemParsedDate.month} ${itemParsedDate.year}`}
+                                {`${itemParsedDate.time} ${itemParsedDate.dayString} - ${itemParsedDate.dayNumber} ${itemParsedDate.month} ${itemParsedDate.year}`}
                             </p>
                             <p className={`mb-1 w-m-[25ch] text-sm opacity-50`}>
                                 {item.note_text}
