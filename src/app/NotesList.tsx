@@ -21,9 +21,9 @@ export default function NotesList(props) {
         let month = months[parsingDate.getMonth()];
         let year = parsingDate.getFullYear();
 
-        let min = parsingDate.getMinutes() < 10 ? parsingDate.getMinutes() + "0" : parsingDate.getMinutes();
+        let min = parsingDate.getMinutes() < 10 ? "0" + parsingDate.getMinutes() : parsingDate.getMinutes();
         let time = `${parsingDate.getHours()}:${min}`
-        
+
         let parsedDate = {
             time: time,
             dayString: day,
@@ -41,8 +41,8 @@ export default function NotesList(props) {
 
     const defineClass = (id = "new") => {
         let activeId = props.activeId;
-        let itemClass = "my-2 mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-4 py-3 "
-        let bgColor = (activeId === id) ? "bg-gray-400" : "bg-neutral-800";
+        let itemClass = "flex flex-col my-2 mx-2 group rounded-lg border border-gray-400  transition-colors hover:bg-neutral-800/30 px-4 py-3 "
+        let bgColor = (activeId === id) ? "bg-zinc-700" : "bg-neutral-900";
         return itemClass + bgColor;
     }
 
@@ -74,14 +74,18 @@ export default function NotesList(props) {
                             key={item.id}
                             onClick={() => { props.handleNoteClick(item) }}
                         >
-                            <h1 className={`mb-1 break-words text-2xl font-semibold`} >{item.note_title}</h1>
-                            <p className={`mb-1 w-m-[25ch] text-sm opacity-50`}>
-                                {`${itemParsedDate.time} ${itemParsedDate.dayString} - ${itemParsedDate.dayNumber} ${itemParsedDate.month} ${itemParsedDate.year}`}
-                            </p>
-                            <p className={`mb-1 w-m-[25ch] text-sm opacity-50`}>
-                                {item.note_text}
-                            </p>
-                            <button onClick={e => { e.stopPropagation(); if (confirm('Delete this note?')) props.removeNote(e, item.id); }} className="my-1 mt-2 bg-red-800 border rounded-md px-2 hover:bg-red-500">Delete </button>
+                            <div className="flex-grow mb-2">
+                                <h1 className={`mb-1 break-words text-2xl font-semibold`} >{item.note_title}</h1>
+                                <p className={`mb-1 w-m-[25ch] text-sm opacity-80`}>
+                                    {`${itemParsedDate.time} ${itemParsedDate.dayString} - ${itemParsedDate.dayNumber} ${itemParsedDate.month} ${itemParsedDate.year}`}
+                                </p>
+                                <p className={`w-m-[25ch] text-sm opacity-50`}>
+                                    {item.note_text} {'\u00A0'}
+                                </p>
+                            </div>
+                            <div className="flex-none">
+                                <button onClick={e => { e.stopPropagation(); if (confirm('Delete this note?')) props.removeNote(e, item.id); }} className="w-1/3 my-1 mt-2 bg-red-800 border rounded-md px-2 duration-300 hover:bg-red-500">Delete </button>
+                            </div>
                         </li>
                     )
                 })

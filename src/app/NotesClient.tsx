@@ -19,9 +19,11 @@ export default function NotesClient(props) {
     const notes = props.notes;
     const newNote = { "id": "new", "note_title": "", "note_text": "" } as Note;
     let initNote = newNote;
+
     const [activeNoteId, setActiveNoteId] = useState(initNote.id);
     const [title, setTitle] = useState(initNote.note_title);
     const [text, setText] = useState(initNote.note_text)
+    const [loading, setLoading] = useState(false);
 
     const handleNoteClick = (item) => {
         setTitle(item.note_title);
@@ -31,29 +33,48 @@ export default function NotesClient(props) {
 
     const createNote = async (e) => {
         e.preventDefault()
+
         let data = {
             "note_title": title,
             "note_text": text,
             "note_date": new Date(),
         }
 
-        if (activeNoteId === "new") {
-            const record = await pb.collection('Notes').create(data);
-        } else {
-            const record = await pb.collection('Notes').update(activeNoteId, data)
+        try {
+            if (activeNoteId === "new") {
+                setLoading(true);
+                await pb.collection('Notes').create(data);
+            } else {
+                setLoading(true);
+                await pb.collection('Notes').update(activeNoteId, data)
+            }
+        } catch (error) {
+            alert(error);
+        } finally {
+            setTimeout(() => {
+                setLoading(false)
+            }, 750)
         }
 
-        setText('');
+        setText(' ');
         setTitle('');
         setActiveNoteId('new');
         router.refresh();
     }
 
     const removeNote = async (e, noteId) => {
-        // console.log(noteId);
-        await pb.collection('Notes').delete(noteId);
+        try {
+            setLoading(true);
+            await pb.collection('Notes').delete(noteId);
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setTimeout(() => {
+                setLoading(false)
+            }, 750)
+        }
 
-        setText('');
+        setText(' ');
         setTitle('');
         setActiveNoteId('new');
         router.refresh();
@@ -62,6 +83,7 @@ export default function NotesClient(props) {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between py-12">
             <div>
+                {loading ? <p>Loading</p> : <p>Not</p>}
                 <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={createNote}>
                     <div className="bg-slate-900 w-full h-[70vh] m-5 p-5 rounded-lg border border-gray-400">
                         <div className="w-full flex flex-col lg:flex-row">
@@ -75,8 +97,8 @@ export default function NotesClient(props) {
                                     className="w-full py-1 text-xl font-extrabold bg-slate-900 outline-none resize-none" type="text" value={title} />
                             </div>
                             <div className="flex flex-row">
-                                <button className="min-w-[10%] mx-1 px-3 py-2 text-white font-extrabold outline-none border-none rounded-2xl bg-cyan-500" type="submit">Save</button>
-                                <button className="min-w-[10%] mx-1 px-3 py-2 text-black font-extrabold outline-none border-none rounded-2xl bg-white" onClick={(e) => {
+                                <button className="min-w-[10%] mx-1 px-3 py-2 text-white font-extrabold outline-none border-none rounded-2xl duration-300 hover:bg-cyan-700 bg-cyan-500" type="submit">Save</button>
+                                <button className="min-w-[10%] mx-1 px-3 py-2 text-black font-extrabold outline-none border-none rounded-2xl duration-300 bg-yellow-50 hover:bg-yellow-500" onClick={(e) => {
                                     e.preventDefault();
                                 }}>Clear Note</button>
                             </div>
