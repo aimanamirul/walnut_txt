@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PocketBase from 'pocketbase'
+import Loading from "./loading";
 
 import NotesList from "./NotesList";
 
@@ -67,7 +68,7 @@ export default function NotesClient(props) {
             setLoading(true);
             await pb.collection('Notes').delete(noteId);
         } catch (error) {
-            console.log(error)
+            alert(error);
         } finally {
             setTimeout(() => {
                 setLoading(false)
@@ -83,9 +84,9 @@ export default function NotesClient(props) {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between py-12">
             <div>
-                {loading ? <p>Loading</p> : <p>Not</p>}
                 <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={createNote}>
-                    <div className="bg-slate-900 w-full h-[70vh] m-5 p-5 rounded-lg border border-gray-400">
+                    <div className="bg-slate-900 w-full h-[70vh] m-5 p-4 rounded-lg border border-gray-400">
+                        {loading ? <Loading /> : <></>}
                         <div className="w-full flex flex-col lg:flex-row">
                             <div className="lg:flex-1">
                                 <input
@@ -94,7 +95,7 @@ export default function NotesClient(props) {
                                     placeholder="Write your Title here!"
                                     onChange={(e) => { setTitle(e.target.value) }}
                                     required={true}
-                                    className="w-full py-1 text-xl font-extrabold bg-slate-900 outline-none resize-none" type="text" value={title} />
+                                    className="w-full py-1 text-xl font-extrabold bg-slate-900 outline-none resize-none border-transparent focus:border-transparent focus:ring-0" type="text" value={title} />
                             </div>
                             <div className="flex flex-row">
                                 <button className="min-w-[10%] mx-1 px-3 py-2 text-white font-extrabold outline-none border-none rounded-2xl duration-300 hover:bg-cyan-700 bg-cyan-500" type="submit">Save</button>
@@ -105,7 +106,7 @@ export default function NotesClient(props) {
                         </div>
                         <hr className="my-3" />
                         <textarea
-                            className="w-full font-['Consolas'] min-h-[80%] lg:min-h-[87%] bg-slate-900 outline-none resize-none"
+                            className="w-full font-['Consolas'] min-h-[80%] lg:min-h-[87%] bg-slate-900 outline-none border-transparent focus:border-transparent focus:ring-0 resize-none"
                             value={text}
                             placeholder="Write your note here!"
                             id="note_text"
