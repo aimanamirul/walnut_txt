@@ -48,7 +48,7 @@ export default function NotesList(props) {
 
     const newNoteSticky = <li
         className={defineClass()}
-        onClick={() => { props.handleNoteClick({ "id": "new", "note_title": "New Note!", "note_text": "" }) }}
+        onClick={() => { props.handleNoteClick({ "id": "new", "note_title": "", "note_text": "" }) }}
     >
         <h1 className={`mb-3 text-2xl font-semibold`} >Create A New Note +</h1>
         <p className={`m-0 w-m-[30ch] text-sm opacity-50`}>

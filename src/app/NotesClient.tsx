@@ -32,7 +32,7 @@ export default function NotesClient(props) {
         setActiveNoteId(item.id);
     }
 
-    const createNote = async (e) => {
+    const sendNote = async (e) => {
         e.preventDefault()
 
         let data = {
@@ -84,7 +84,7 @@ export default function NotesClient(props) {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between py-12">
             <div>
-                <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={createNote}>
+                <form className="flex justify-between flex-col items-center w-[85vw]" onSubmit={sendNote}>
                     <div className="bg-slate-900 w-full h-[70vh] m-5 p-4 rounded-lg border border-gray-400">
                         {loading ? <Loading /> : <></>}
                         <div className="w-full flex flex-col lg:flex-row">
